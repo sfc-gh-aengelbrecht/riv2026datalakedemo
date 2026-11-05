@@ -1,0 +1,20 @@
+-- Teardown: removes this account's demo objects only.
+-- Shared AWS data (S3 table bucket, Glue tables) is NOT touched: catalog-linked databases are
+-- dropped with their links only. Files written by your dynamic Iceberg table remain under
+-- s3://riv-demo-2026-snow-w2/<your prefix>/ until the sandbox admin removes them.
+
+USE ROLE RIV_DEMO_RL;
+
+-- Make the catalog-linked databases read-only first, so nothing can propagate a drop
+-- to the shared remote catalogs.
+ALTER DATABASE IF EXISTS RIV2026DATALAKEDEMO UPDATE LINKED_CATALOG SET ALLOWED_WRITE_OPERATIONS = NONE;
+ALTER DATABASE IF EXISTS RIV_DEMO_S3T_DB UPDATE LINKED_CATALOG SET ALLOWED_WRITE_OPERATIONS = NONE;
+
+DROP AGENT IF EXISTS RIV2026DL_SNOW.DL_ANALYTICS.RIV_RETAIL_DISTRIBUTION_AGENT;
+DROP DATABASE IF EXISTS RIV2026DL_SNOW;
+DROP DATABASE IF EXISTS RIV2026DATALAKEDEMO;
+DROP DATABASE IF EXISTS RIV_DEMO_S3T_DB;
+DROP EXTERNAL VOLUME IF EXISTS RIV_DEMO_2026_SNOW_EXT_VOL;
+DROP CATALOG INTEGRATION IF EXISTS RIV_DEMO_2026_GLUE_CAT_INT;
+DROP CATALOG INTEGRATION IF EXISTS RIV_DEMO_S3T_CAT_INT;
+DROP WAREHOUSE IF EXISTS RIV_DEMO_WH;

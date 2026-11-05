@@ -1,0 +1,61 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "ManageDemoFunctionsAndLayers",
+      "Effect": "Allow",
+      "Action": "lambda:*",
+      "Resource": [
+        "arn:aws:lambda:us-west-2:484577546576:function:riv-demo-s3t-*",
+        "arn:aws:lambda:us-west-2:484577546576:layer:riv-demo-*",
+        "arn:aws:lambda:us-west-2:484577546576:layer:riv-demo-*:*"
+      ]
+    },
+    {
+      "Sid": "PublishLayers",
+      "Effect": "Allow",
+      "Action": ["lambda:PublishLayerVersion", "lambda:ListLayers", "lambda:ListLayerVersions", "lambda:ListFunctions", "lambda:GetAccountSettings"],
+      "Resource": "*"
+    },
+    {
+      "Sid": "UseAwsManagedPandasLayer",
+      "Effect": "Allow",
+      "Action": ["lambda:GetLayerVersion", "lambda:ListLayerVersions"],
+      "Resource": "arn:aws:lambda:us-west-2:336392948345:layer:*"
+    },
+    {
+      "Sid": "PassLambdaExecutionRole",
+      "Effect": "Allow",
+      "Action": "iam:PassRole",
+      "Resource": "arn:aws:iam::484577546576:role/riv-demo-s3t-lambda-role",
+      "Condition": {"StringEquals": {"iam:PassedToService": "lambda.amazonaws.com"}}
+    },
+    {
+      "Sid": "ManageDemoParameters",
+      "Effect": "Allow",
+      "Action": ["ssm:PutParameter", "ssm:GetParameter", "ssm:GetParameters", "ssm:GetParameterHistory", "ssm:DeleteParameter", "ssm:AddTagsToResource", "ssm:ListTagsForResource"],
+      "Resource": "arn:aws:ssm:us-west-2:484577546576:parameter/riv-demo/*"
+    },
+    {
+      "Sid": "DescribeParameters",
+      "Effect": "Allow",
+      "Action": "ssm:DescribeParameters",
+      "Resource": "*"
+    },
+    {
+      "Sid": "DemoLogs",
+      "Effect": "Allow",
+      "Action": ["logs:CreateLogGroup", "logs:PutRetentionPolicy", "logs:DescribeLogStreams", "logs:GetLogEvents", "logs:FilterLogEvents", "logs:StartLiveTail", "logs:StopLiveTail"],
+      "Resource": [
+        "arn:aws:logs:us-west-2:484577546576:log-group:/aws/lambda/riv-demo-s3t-*",
+        "arn:aws:logs:us-west-2:484577546576:log-group:/aws/lambda/riv-demo-s3t-*:*"
+      ]
+    },
+    {
+      "Sid": "DescribeLogGroups",
+      "Effect": "Allow",
+      "Action": "logs:DescribeLogGroups",
+      "Resource": "*"
+    }
+  ]
+}

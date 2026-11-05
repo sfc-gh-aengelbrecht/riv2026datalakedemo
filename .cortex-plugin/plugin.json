@@ -1,0 +1,10 @@
+{
+  "name": "riv-lakehouse-demo",
+  "version": "0.1.0",
+  "description": "RIV 2026 Snowflake + AWS lakehouse demo: per-user S3 bucket and IAM role in the SE Sandbox, catalog-linked databases over AWS Glue (Lake Formation) and Amazon S3 Tables Iceberg tables, a Snowflake-managed dynamic Iceberg table, semantic view and Cortex Agent in CoWork, plus a guarded micro-batch Lambda runner.",
+  "author": {
+    "name": "Andries Engelbrecht",
+    "email": "andries.engelbrecht@snowflake.com"
+  },
+  "skills": ["skills"]
+}

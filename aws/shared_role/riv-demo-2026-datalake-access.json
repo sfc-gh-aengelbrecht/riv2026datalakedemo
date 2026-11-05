@@ -1,0 +1,28 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "glue:GetCatalog",
+                "glue:GetDatabase",
+                "glue:GetDatabases",
+                "glue:GetTable",
+                "glue:GetTables",
+                "glue:CreateTable",
+                "glue:UpdateTable",
+                "glue:DeleteTable"
+            ],
+            "Resource": [
+                "arn:aws:glue:us-west-2:484577546576:catalog",
+                "arn:aws:glue:us-west-2:484577546576:database/rivdemo_2026",
+                "arn:aws:glue:us-west-2:484577546576:table/rivdemo_2026/*"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": "lakeformation:GetDataAccess",
+            "Resource": "*"
+        }
+    ]
+}

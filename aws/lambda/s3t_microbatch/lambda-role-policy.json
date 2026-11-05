@@ -1,0 +1,20 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "S3TablesDemoBucket",
+      "Effect": "Allow",
+      "Action": "s3tables:*",
+      "Resource": [
+        "arn:aws:s3tables:us-west-2:484577546576:bucket/riv-demo-2026-s3t",
+        "arn:aws:s3tables:us-west-2:484577546576:bucket/riv-demo-2026-s3t/table/*"
+      ]
+    },
+    {
+      "Sid": "StopFlag",
+      "Effect": "Allow",
+      "Action": ["ssm:GetParameter", "ssm:PutParameter"],
+      "Resource": "arn:aws:ssm:us-west-2:484577546576:parameter/riv-demo/s3t-microbatch/stop"
+    }
+  ]
+}

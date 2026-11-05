@@ -1,0 +1,32 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "ToggleStopFlag",
+      "Effect": "Allow",
+      "Action": ["ssm:GetParameter", "ssm:PutParameter", "ssm:GetParameterHistory"],
+      "Resource": "arn:aws:ssm:us-west-2:484577546576:parameter/riv-demo/s3t-microbatch/stop"
+    },
+    {
+      "Sid": "FindParameter",
+      "Effect": "Allow",
+      "Action": "ssm:DescribeParameters",
+      "Resource": "*"
+    },
+    {
+      "Sid": "RunAndWatchDemo",
+      "Effect": "Allow",
+      "Action": ["lambda:InvokeFunction", "lambda:GetFunction"],
+      "Resource": "arn:aws:lambda:us-west-2:484577546576:function:riv-demo-s3t-microbatch"
+    },
+    {
+      "Sid": "ReadLogs",
+      "Effect": "Allow",
+      "Action": ["logs:FilterLogEvents", "logs:GetLogEvents", "logs:DescribeLogStreams", "logs:StartLiveTail"],
+      "Resource": [
+        "arn:aws:logs:us-west-2:484577546576:log-group:/aws/lambda/riv-demo-s3t-microbatch",
+        "arn:aws:logs:us-west-2:484577546576:log-group:/aws/lambda/riv-demo-s3t-microbatch:*"
+      ]
+    }
+  ]
+}

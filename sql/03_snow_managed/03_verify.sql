@@ -1,0 +1,17 @@
+-- Pattern 3, step 3: verify the dynamic Iceberg table
+USE ROLE RIV_DEMO_RL;
+USE WAREHOUSE RIV_DEMO_WH;
+
+SHOW DYNAMIC TABLES IN SCHEMA RIV2026DL_SNOW.DYNAMIC_ICEBERG;
+
+-- Latest refreshes (state should be SUCCEEDED)
+SELECT name, state, refresh_action, refresh_start_time, refresh_end_time
+FROM TABLE(INFORMATION_SCHEMA.DYNAMIC_TABLE_REFRESH_HISTORY(
+  NAME => 'RIV2026DL_SNOW.DYNAMIC_ICEBERG.ACTIVITY_AGG_DIT'))
+ORDER BY refresh_start_time DESC
+LIMIT 10;
+
+-- Freshness: rows per load minute
+SELECT LOAD_MINUTE, SUM(ROW_COUNT) AS rows_loaded, MAX(LAST_LOADED_AT) AS last_loaded_at
+FROM RIV2026DL_SNOW.DYNAMIC_ICEBERG.ACTIVITY_AGG_DIT
+GROUP BY 1 ORDER BY 1 DESC LIMIT 20;
